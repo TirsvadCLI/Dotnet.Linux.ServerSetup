@@ -1,0 +1,86 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Company>TirsvadCLI</Company>
+    <Copyright>Copyright © $(Company) 2021</Copyright>
+    <Authors>Jens Tirsvad Nielsen</Authors>
+    <Product>Linux Server Setup</Product>
+    <VersionPrefix>0.1.2</VersionPrefix>
+    <VersionSuffix>alpha.1</VersionSuffix>
+    <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
+    <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <InformationalVersion>This is a prerelease package</InformationalVersion>
+    <PackageId>$(Company).Linux.ServerSetup</PackageId>
+    <Description>
+      Server Setup program for linux console
+    </Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/TirsvadCLI/Linux.LinuxServerSetup.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <ProjectUrl>https://www.tirsvad-cms.dk/</ProjectUrl>
+    <PackageIcon>images/tirsvadcms_logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PackageTags>Linux; Debian; Ubuntu</PackageTags>
+
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <PlatformTarget>x64</PlatformTarget>
+
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishReadyToRun>true</PublishReadyToRun>
+
+    <DebugType>embedded</DebugType>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <!-- <EmbedUntrackedSources>true</EmbedUntrackedSources> -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="YamlDotNet" Version="11.2.1" />
+    <PackageReference Include="TirsvadCLI.Linux.Distribution" Version="0.1.4" />
+    <PackageReference Include="TirsvadCLI.Linux.PackageManager" Version="0.1.4-alpha.3" />
+  </ItemGroup>
+
+  <!-- For debug only -->
+  <!--
+  <ItemGroup>
+    <Reference Include="PackageManager">
+      <HintPath>../../../PackageManager/src/PackageManager/bin/Debug/net6.0/PackageManager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+ -->
+
+  <ItemGroup>
+    <Content Include="conf\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="conf\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="../../LICENSE" Pack="true" PackagePath="" />
+    <None Include="../../tirsvadcms_logo.png" Pack="true" Visible="false" PackagePath="images/tirsvadcms_logo.png" />
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

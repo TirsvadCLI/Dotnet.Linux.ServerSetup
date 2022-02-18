@@ -1,0 +1,16 @@
+---
+Distributions:
+- distribution: Debian GNU/Linux
+  Versions:
+  - version: '10'
+    Files:
+    - 8e4df0b3-75de-4cbe-8c40-db2577c11b5b
+  - version: '11'
+    Files:
+    - 8e4df0b3-75de-4cbe-8c40-db2577c11b5b
+- distribution: Ubuntu
+  Versions:
+  - version: '20.18'
+    Files:
+    - 8e4df0b3-75de-4cbe-8c40-db2577c11b5b
+    - 8e83b8cc-8909-491e-b808-c449a53ddb06

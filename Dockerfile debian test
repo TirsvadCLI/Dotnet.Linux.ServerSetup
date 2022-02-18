@@ -1,0 +1,17 @@
+FROM tirsvad/dotnet6-debian11:latest AS build
+
+WORKDIR /app
+
+COPY . .
+
+# RUN dotnet build
+
+# docker build -t packagemanager-service:latest .
+# docker run --rm -it -P 5000:80 packagemanager-service:latest
+
+# run the unit tests
+
+FROM build AS test
+
+WORKDIR /app/src/LinuxServerSetup
+RUN dotnet test LinuxServerSetup.csproj --logger:"console;verbosity=detailed"
