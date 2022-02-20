@@ -16,7 +16,7 @@
       Server Setup program for linux console
     </Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RepositoryUrl>https://github.com/TirsvadCLI/Linux.LinuxServerSetup.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/TirsvadCLI/Linux.ServerSetup.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <ProjectUrl>https://www.tirsvad-cms.dk/</ProjectUrl>
     <PackageIcon>images/tirsvadcms_logo.png</PackageIcon>

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LinuxServerSetup\LinuxServerSetup.csproj" />
+    <ProjectReference Include="..\ServerSetup\ServerSetup.csproj" />
   </ItemGroup>
 
 </Project>

@@ -17,7 +17,6 @@ using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using YamlDotNet.RepresentationModel;
 
-
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -33,17 +32,9 @@ internal class Program
 
   public static void Main(string[] args)
   {
-    Task task__cmdParser = Parser.Default.ParseArguments<CmdLineOptions>(args)
-        .WithParsedAsync(_CmdParser);
-
-    Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .WriteTo.Console(
-                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
-            )
-            .WriteTo.File("logs/run.log")
-            .CreateLogger();
+    Parser.Default.ParseArguments<CmdLineOptions>(args)
+      .WithParsed(_CmdParserDoOptions);
+      // .WithNotParsed(HandleParseError);
 
     Version assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
@@ -69,7 +60,7 @@ internal class Program
     }
   }
 
-  private static Task _CmdParser(CmdLineOptions options)
+  private static void _CmdParserDoOptions(CmdLineOptions options)
   {
     // if (options.Url is not null and not "")
     // {
@@ -88,9 +79,33 @@ internal class Program
     //   }
     //   if (options.Verbose) Console.WriteLine("Donwload custom configuration file from: " + _customConfigFileUrl);
     // }
-    if (options.Verbose) Console.WriteLine("Verbose : " + options.Verbose.ToString());
+    if (options.Verbose)
+    {
+      // Console.WriteLine("Verbose : " + options.Verbose.ToString());
+      Log.Logger = new LoggerConfiguration()
+                        .MinimumLevel.Debug()
+                        .WriteTo.Console(
+                            outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
+                            restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug
+                        )
+                        .WriteTo.File("logs/run.log")
+                        .CreateLogger();
 
-    return Task.CompletedTask;
+    }
+    else
+    {
+      Log.Logger = new LoggerConfiguration()
+                        .MinimumLevel.Debug()
+                        .WriteTo.Console(
+                            outputTemplate: "{Message:lj}{NewLine}{Exception}",
+                            restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
+                        )
+                        .WriteTo.File(
+                          "logs/run.log",
+                          outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"
+                        )
+                        .CreateLogger();
+    }
 
     // List<Task> listOfTasks = new List<Task>();
 
@@ -108,43 +123,20 @@ internal class Program
     // }
   }
 
-  // private static async Task _CmdParser(string[] args)
-  // {
-  //     // CommandLine.Parser.Default.ParseArguments<Options>(args)
-  //     //     .WithParsed(RunOptions)
-  //     //     .WithNotParsed(HandleParseError);
-
-  //     await Parser.Default.ParseArguments<Options>(args)
-  //                 .WithParsed(RunAsync);
-
-  //     var retValue = await Parser.Default.ParseArguments<Options>(args).MapResult(RunAndReturnExitCodeAsync, _ => Task.FromResult(1));
-  //     await parserResult.WithNotParsedAsync();
-
-  //     static void RunAsync(Options opts)
-  //     {
-
-  //     }
-  // }
-
-  public static Task<string> ReadFileToText(string path)
-  {
-    return Task.Run(() =>
-    {
-      return File.ReadAllText(path);
-    });
-  }
-
-
-  static void RunOptions(CmdLineOptions opts)
-  {
-    //handle options
-  }
-
-  static void HandleParseError(IEnumerable<Error> errs)
+  private static void _CmdParserHandleParseError(IEnumerable<Error> errs)
   {
     //handle errors
   }
 
+  // public static Task<string> ReadFileToText(string path)
+  // {
+  //   return Task.Run(() =>
+  //   {
+  //     return File.ReadAllText(path);
+  //   });
+  // }
+
+  // Loads this scripts OS compatibilities to _Distributions
   public static void LoadConfigOsCompatibilities()
   {
     using (StreamReader input = File.OpenText(_configurationFile))

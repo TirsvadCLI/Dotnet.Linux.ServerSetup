@@ -15,9 +15,9 @@ FROM build AS test
 
 COPY .localNugetFeed/ /srv/Nuget
 
-WORKDIR /app/src/LinuxServerSetup/
+WORKDIR /app/src/ServerSetup/
 RUN dotnet build
-WORKDIR /app/src/LinuxServerSetup/bin/Debug/net6.0/linux-x64
-RUN ./LinuxServerSetup
+WORKDIR /app/src/ServerSetup/bin/Debug/net6.0/linux-x64
+RUN ./ServerSetup
 RUN cat logs/run.log
 

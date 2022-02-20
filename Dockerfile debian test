@@ -13,5 +13,5 @@ COPY . .
 
 FROM build AS test
 
-WORKDIR /app/src/LinuxServerSetup
-RUN dotnet test LinuxServerSetup.csproj --logger:"console;verbosity=detailed"
+WORKDIR /app/src/ServerSetup
+RUN dotnet test ServerSetup.csproj --logger:"console;verbosity=detailed"
