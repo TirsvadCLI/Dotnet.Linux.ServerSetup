@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using YamlDotNet.Serialization;
 
-namespace TirsvadCLI.Linux.LinuxServerSetup;
+namespace TirsvadCLI.Linux.ServerSetup;
 
 public class Distributions
 {

@@ -20,21 +20,21 @@ using YamlDotNet.RepresentationModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace TirsvadCLI.Linux.LinuxServerSetup;
+namespace TirsvadCLI.Linux.ServerSetup;
 
-internal class Program
+class Program
 {
   private static string _configurationFile = "conf/config.yaml";
-
   private static Distributions _Distributions = null;
   private static string _configDistribution = null;
   private static string _configDistrobutionVersion = null;
+  private static string _customConfigFileUrl = "";
 
-  public static void Main(string[] args)
+  public static async Task Main(string[] args)
   {
     Parser.Default.ParseArguments<CmdLineOptions>(args)
       .WithParsed(_CmdParserDoOptions);
-      // .WithNotParsed(HandleParseError);
+    // .WithNotParsed(HandleParseError);
 
     Version assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
@@ -42,7 +42,7 @@ internal class Program
 
     LoadConfigOsCompatibilities();
 
-    _PreCheck();
+    await _PreCheck();
 
     Log.Debug("PM " + PackageManager.packageManager);
 
@@ -62,33 +62,31 @@ internal class Program
 
   private static void _CmdParserDoOptions(CmdLineOptions options)
   {
-    // if (options.Url is not null and not "")
-    // {
-    //   _customConfigFileUrl = options.Url;
-    //   if (options.User is not null and not "")
-    //   {
-    //     if (options.Verbose) Console.WriteLine("User: " + options.User.ToString());
-    //   }
-    //   if (options.Token is not null and not "")
-    //   {
-    //     if (options.Verbose) Console.WriteLine("Token: " + options.Token.ToString());
-    //   }
-    //   if (options.StripComponents.HasValue)
-    //   {
-    //     if (options.Verbose) Console.WriteLine("User: " + options.StripComponents.ToString());
-    //   }
-    //   if (options.Verbose) Console.WriteLine("Donwload custom configuration file from: " + _customConfigFileUrl);
-    // }
+    if (options.Url is not null and not "")
+    {
+      _customConfigFileUrl = options.Url;
+      // if (options.User is not null and not "")
+      // {
+      //   if (options.Verbose) Console.WriteLine("User: " + options.User.ToString());
+      // }
+      if (options.Token is not null and not "")
+      {
+        if (options.Verbose) Console.WriteLine("Token: " + options.Token.ToString());
+      }
+      if (options.StripComponents.HasValue)
+      {
+        if (options.Verbose) Console.WriteLine("StripComponents: " + options.StripComponents.ToString());
+      }
+      if (options.Verbose) Console.WriteLine("Donwload custom configuration file from: " + _customConfigFileUrl);
+    }
+
     if (options.Verbose)
     {
       // Console.WriteLine("Verbose : " + options.Verbose.ToString());
       Log.Logger = new LoggerConfiguration()
                         .MinimumLevel.Debug()
-                        .WriteTo.Console(
-                            outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}",
-                            restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug
-                        )
-                        .WriteTo.File("logs/run.log")
+                        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug)
+                        .WriteTo.File("logs/run.log", outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
                         .CreateLogger();
 
     }
@@ -96,14 +94,8 @@ internal class Program
     {
       Log.Logger = new LoggerConfiguration()
                         .MinimumLevel.Debug()
-                        .WriteTo.Console(
-                            outputTemplate: "{Message:lj}{NewLine}{Exception}",
-                            restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information
-                        )
-                        .WriteTo.File(
-                          "logs/run.log",
-                          outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"
-                        )
+                        .WriteTo.Console(outputTemplate: "{Message:lj}{NewLine}{Exception}", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
+                        .WriteTo.File("logs/run.log", outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
                         .CreateLogger();
     }
 
@@ -148,11 +140,11 @@ internal class Program
     }
   }
 
-  private static void _PreCheck()
+  private static async Task _PreCheck()
   {
     try
     {
-      CheckOs();
+      await CheckOs();
     }
     catch (PlatformNotSupportedException e)
     {
@@ -162,7 +154,7 @@ internal class Program
     }
     try
     {
-      CheckRoot();
+      await CheckRoot();
     }
     catch (UnauthorizedAccessException e)
     {
@@ -171,7 +163,7 @@ internal class Program
       System.Environment.Exit(1);
     }
 
-    static void CheckRoot()
+    static async Task CheckRoot()
     {
       char[] separators = { '\n', ',', '.', ' ' };
       string result = "";
@@ -185,7 +177,7 @@ internal class Program
 
       string userName = ps.StandardOutput.ReadToEnd().Trim();
 
-      ps.WaitForExit();
+      await ps.WaitForExitAsync();
 
       ps = new Process();
       ps.StartInfo.UseShellExecute = false;
@@ -200,7 +192,7 @@ internal class Program
 
       Log.Debug($"User ID of who is running this: {userId}");
 
-      ps.WaitForExit();
+      await ps.WaitForExitAsync();
 
       if (userId == 0)
       {
@@ -225,7 +217,7 @@ internal class Program
       throw new UnauthorizedAccessException("User " + userName + " with Id " + userId + " is unauthorized");
     }
 
-    static bool CheckOs()
+    static Task CheckOs()
     {
       if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
       {
@@ -251,7 +243,6 @@ internal class Program
             index = i;
           }
         }
-        return true;
       }
       else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
       {
@@ -261,7 +252,12 @@ internal class Program
       {
         throw new PlatformNotSupportedException("Microsoft Windows is not supported");
       }
-      throw new PlatformNotSupportedException("Cannot determine operating system!");
+      else
+      {
+        throw new PlatformNotSupportedException("Cannot determine operating system!");
+      }
+      return Task.CompletedTask;
+
     }
   }
 }

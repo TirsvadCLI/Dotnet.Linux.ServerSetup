@@ -13,7 +13,7 @@
     <InformationalVersion>This is a prerelease package</InformationalVersion>
     <PackageId>$(Company).Linux.ServerSetup</PackageId>
     <Description>
-      Server Setup program for linux console
+      Server Setup application for linux console
     </Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/TirsvadCLI/Linux.ServerSetup.git</RepositoryUrl>

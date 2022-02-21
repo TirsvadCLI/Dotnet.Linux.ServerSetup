@@ -1,8 +1,8 @@
 using Xunit;
-using TirsvadCLI.Linux.LinuxServerSetup;
+using TirsvadCLI.Linux.ServerSetup;
 
 
-namespace TirsvadCLI.Linux.LinuxServerSetup.Tests;
+namespace TirsvadCLI.Linux.ServerSetup.Tests;
 
 public class TestLinuxServerSetup
 {
