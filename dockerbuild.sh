@@ -8,3 +8,5 @@ docker build --pull --rm -f "Dockerfile" -t linuxserversetup:latest "."
 shopt -s extglob
 cd .localNugetFeed
 rm !("README.md")
+
+docker run --rm -it linuxserversetup:latest bash

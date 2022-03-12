@@ -1,0 +1,26 @@
+systemGroupAndUsers:
+  groups:
+  - name: staff
+  - name: website1
+  - name: website2
+  users:
+  - name: userwithsudo
+    password: secret
+    groupMember:
+    homeDirectory:
+    defaultShell: /bin/bash
+    superUser: true
+  - name: userWebsite1
+    password: secret
+    groupMember:
+    homeDirectory:
+    defaultShell: /bin/bash
+    superUser: false
+  - name: UserWebsite2
+    password: secret
+    groupMember:
+    - name: website2
+    homeDirectory:
+    defaultShell: /bin/bash
+    superUser: false
+

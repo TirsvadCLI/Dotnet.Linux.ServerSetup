@@ -1,0 +1,13 @@
+---
+systemGroupAndUsers:
+  groups:
+  - name: website1
+  - name: website2
+  users:
+  - name: userWebsite1
+    password: secret
+    groupMember:
+  - name: UserWebsite2
+    password: secret
+    groupMember:
+    - name: website2

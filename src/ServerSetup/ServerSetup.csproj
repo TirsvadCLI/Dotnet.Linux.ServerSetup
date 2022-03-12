@@ -6,7 +6,7 @@
     <Authors>Jens Tirsvad Nielsen</Authors>
     <Product>Linux Server Setup</Product>
     <VersionPrefix>0.1.2</VersionPrefix>
-    <VersionSuffix>alpha.1</VersionSuffix>
+    <VersionSuffix>alpha.2</VersionSuffix>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
     <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
@@ -39,6 +39,8 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
+    <Nullable>enable</Nullable>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -47,12 +49,14 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog" Version="2.11.0-dev-01380" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
+    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta3.22114.1" />
     <PackageReference Include="YamlDotNet" Version="11.2.1" />
     <PackageReference Include="TirsvadCLI.Linux.Distribution" Version="0.1.4" />
-    <PackageReference Include="TirsvadCLI.Linux.PackageManager" Version="0.1.4-alpha.3" />
+    <PackageReference Include="TirsvadCLI.Linux.PackageManager" Version="0.1.7-alpha.3" />
   </ItemGroup>
 
   <!-- For debug only -->

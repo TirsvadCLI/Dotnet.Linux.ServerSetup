@@ -1,0 +1,32 @@
+#
+systemUserAndGroups:
+  groups: &groups
+    - staff
+    - website1
+    - website2
+
+  superuser:
+    name: myuser
+    password: secret
+    email: myuser@gmail.com
+    shell: /bin/bash
+    memberOfGroups:
+      - sudo
+      - staff
+      - website1
+      - website2
+
+    homeDirectory: /home/myuser
+    # sshkey:
+
+  users:
+    - name: websiteeditor1
+      password: secret
+      shell: /bin/bash
+      memberOfGroups:
+        - website1
+    - name: websiteeditor2
+      password: secret
+      shell: /bin/bash
+      memberOfGroups:
+        - website2

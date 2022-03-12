@@ -10,4 +10,5 @@ dotnet pack --configuration Release
 
 # github source add dotnet nuget add source --username USER --password $GITHUBPAT --store-password-in-clear-text --name github "https://nuget.pkg.github.com/TirsvadCLI/index.json"
 # GITHUBPAT is my secret key for github
-dotnet nuget push "src/${PROJECTDIR}/bin/Release/$(jq -r '.project.restore.projectName' $JSONFILE).$(jq -r '.project.version' $JSONFILE).nupkg"  --api-key $GITHUBPAT --source "github"
+dotnet nuget push "src/${PROJECTDIR}/bin/Release/$(jq -r '.project.restore.projectName' $JSONFILE).$(jq -r '.project.version' $JSONFILE).nupkg"  --api-key $GITHUBPAT --source https://nuget.pkg.github.com/TirsvadCLI/index.json --skip-duplicate
+dotnet nuget push "src/${PROJECTDIR}/bin/Release/$(jq -r '.project.restore.projectName' $JSONFILE).$(jq -r '.project.version' $JSONFILE).nupkg"  --api-key $NUGETPAT --source https://api.nuget.org/v3/index.json --skip-duplicate

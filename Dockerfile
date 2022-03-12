@@ -16,8 +16,13 @@ FROM build AS test
 COPY .localNugetFeed/ /srv/Nuget
 
 WORKDIR /app/src/ServerSetup/
-RUN dotnet build
-WORKDIR /app/src/ServerSetup/bin/Debug/net6.0/linux-x64
-RUN ./ServerSetup
-RUN cat logs/run.log
+# RUN dotnet build
+RUN dotnet publish
+WORKDIR /app/src/ServerSetup/bin/Debug/net6.0/linux-x64/publish
+# RUN ./ServerSetup --help
+RUN ./ServerSetup config copy
+RUN ./ServerSetup --no-upgrade-os
+
+# RUN ./ServerSetup copy
+# RUN cat logs/run.log
 
