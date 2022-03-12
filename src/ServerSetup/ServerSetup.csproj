@@ -21,6 +21,7 @@
     <ProjectUrl>https://www.tirsvad-cms.dk/</ProjectUrl>
     <PackageIcon>images/tirsvadcms_logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Nullable>enable</Nullable>
 
     <PackageTags>Linux; Debian; Ubuntu</PackageTags>
 
@@ -39,8 +40,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-    <Nullable>enable</Nullable>
-
+    <GenerateRequiresPreviewFeaturesAttribute>False</GenerateRequiresPreviewFeaturesAttribute>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

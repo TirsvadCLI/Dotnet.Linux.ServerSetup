@@ -32,7 +32,6 @@ public class ServerSetting
             {
                 defaultShell = "/bin/bash";
                 superUser = false;
-                // groupMember = new List<ServerSetting.SystemGroupAndUsers.Group> {};
             }
         }
     }

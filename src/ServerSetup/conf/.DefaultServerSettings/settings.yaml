@@ -1,26 +1,38 @@
+---
+# Sections where we doing stuff
 systemGroupAndUsers:
+  # Optional: Where we adding systems group
   groups:
-  - name: staff
-  - name: website1
-  - name: website2
-  users:
-  - name: userwithsudo
-    password: secret
-    groupMember:
-    homeDirectory:
-    defaultShell: /bin/bash
-    superUser: true
-  - name: userWebsite1
-    password: secret
-    groupMember:
-    homeDirectory:
-    defaultShell: /bin/bash
-    superUser: false
-  - name: UserWebsite2
-    password: secret
-    groupMember:
-    - name: website2
-    homeDirectory:
-    defaultShell: /bin/bash
-    superUser: false
+    # Optional: Example of a user group that handle this "website" / programing the website
+    #           Second Example of a user group that can handle another website / programing the website
+    - name: websiteStaff
+    - name: websiteCrazyDealsStaff
 
+  # Optional: Where we adding system users
+  users:
+    # Required: 'name' if user is add. Here is an example of a superuser
+    # Optional: 'password' encrypted password "secret" can be done by a perlscript $ perl -e 'print crypt("secret", "salt"),"\n"'
+    # Optional: 'superuser' adding user to sudo group
+    # Optional: 'homeDirectory'
+    # Optional: 'defaultShell'
+    - name: myAdmin
+      password: saHW9GdxihkGQ # 'secret'
+      superUser: true
+      groupMember:
+        - name: websiteStaff
+        - name: websiteCrazyDealsStaff
+      # homeDirectory: /home/myAdmin
+      # defaultShell: /bin/bash
+    - name: thor
+      password: saHW9GdxihkGQ # 'secret'
+      groupMember:
+      # homeDirectory:
+      # defaultShell: /bin/bash
+      # superUser: false
+    - name: odin
+      password: saHW9GdxihkGQ # 'secret'
+      groupMember:
+        - name: websiteStaff
+      # homeDirectory:
+      # defaultShell: /bin/bash
+      # superUser: false

@@ -241,6 +241,13 @@ static class Program
                             ps.StartInfo.ArgumentList.Add(string.Join(",", l));
                         }
                     }
+                    if (user.password is not null && user.password != "")
+                    {
+                        ps.StartInfo.ArgumentList.Add("-p");
+                        ps.StartInfo.ArgumentList.Add(user.password); // encrypted password passed in here
+                    }
+                    ps.StartInfo.ArgumentList.Add("--shell");
+                    ps.StartInfo.ArgumentList.Add(user.defaultShell);
                     ps.StartInfo.ArgumentList.Add(user.name);
                     Log.Information("Added user with cmd: useradd {0}", string.Join(" ", ps.StartInfo.ArgumentList.ToList()));
                     ps.Start();

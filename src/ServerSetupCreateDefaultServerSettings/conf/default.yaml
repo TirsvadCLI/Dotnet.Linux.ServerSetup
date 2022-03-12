@@ -5,19 +5,19 @@ systemGroupAndUsers:
   - name: website2
   users:
   - name: userwithsudo
-    password: secret
-    groupMember: []
+    password: saHW9GdxihkGQ
+    groupMember: 
     homeDirectory: 
     defaultShell: /bin/bash
     superUser: true
   - name: userWebsite1
-    password: secret
-    groupMember: []
+    password: saHW9GdxihkGQ
+    groupMember: 
     homeDirectory: 
     defaultShell: /bin/bash
     superUser: false
-  - name: UserWebsite2
-    password: secret
+  - name: userWebsite2
+    password: saHW9GdxihkGQ
     groupMember:
     - name: website2
     homeDirectory: 

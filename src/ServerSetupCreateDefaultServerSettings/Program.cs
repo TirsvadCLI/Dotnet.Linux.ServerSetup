@@ -28,17 +28,14 @@ class Program
                     new ServerSetting.SystemGroupAndUsers.Group() { name ="website2" }
                 },
                 users = new List<ServerSetting.SystemGroupAndUsers.User>() {
-                    new ServerSetting.SystemGroupAndUsers.User() { name = "userwithsudo", password = "secret", superUser = true },
-                    new ServerSetting.SystemGroupAndUsers.User() { name = "userWebsite1", password = "secret", superUser = false },
-                    new ServerSetting.SystemGroupAndUsers.User() { name = "UserWebsite2", password = "secret", groupMember = new List<ServerSetting.SystemGroupAndUsers.Group>() {
+                    new ServerSetting.SystemGroupAndUsers.User() { name = "userwithsudo", password = "saHW9GdxihkGQ", superUser = true },
+                    new ServerSetting.SystemGroupAndUsers.User() { name = "userWebsite1", password = "saHW9GdxihkGQ" },
+                    new ServerSetting.SystemGroupAndUsers.User() { name = "userWebsite2", password = "saHW9GdxihkGQ", groupMember = new List<ServerSetting.SystemGroupAndUsers.Group>() {
                         new ServerSetting.SystemGroupAndUsers.Group() { name = "website2" }
                     }}
                 },
             },
         };
-
-        // _serverSettings.systemGroupAndUsers.groups.Add(new ServerSetting.SystemGroupAndUsers.Group() { name ="staff" });
-        // _serverSettings.systemGroupAndUsers.users.Add(new ServerSetting.SystemGroupAndUsers.User() { name = "userWebsite1", password = "secret", superUser = false });
 
         string stringBuilder = DumpAsYaml(_serverSettings).ToString();
 

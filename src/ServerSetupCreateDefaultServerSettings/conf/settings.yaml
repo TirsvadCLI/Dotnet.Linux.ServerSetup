@@ -7,7 +7,7 @@ systemGroupAndUsers:
   - name: userWebsite1
     password: secret
     groupMember:
-  - name: UserWebsite2
+  - name: userWebsite2
     password: secret
     groupMember:
     - name: website2
